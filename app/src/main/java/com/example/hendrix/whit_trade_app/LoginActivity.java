@@ -3,6 +3,7 @@ package com.example.hendrix.whit_trade_app;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -32,13 +33,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.parse.Parse;
+//import com.parse.ParseException;
+//import com.parse.ParseGeoPoint;
+//import com.parse.ParseQuery;
+//import com.parse.ParseQueryAdapter;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
-
+    Button sign_in,Registor_button;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -67,6 +74,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+        //here is where i link to the back end
+        Parse.initialize(new Parse.Configuration.Builder(this.getApplicationContext())
+                        .applicationId("631e40ce-34fc-4661-b93b-2608588b2c38")
+                        .server("https://myknico.azurewebsites.net")
+                        .build()
+        );
+
+        sign_in = (Button) findViewById(R.id.sign_in);
+        sign_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, BooksPageActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        Registor_button = (Button) findViewById(R.id.Registor_button);
+        Registor_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegistorPageActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -82,8 +116,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button SignIn = (Button) findViewById(R.id.sign_in);
+        SignIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
